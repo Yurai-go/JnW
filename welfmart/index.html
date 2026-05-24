@@ -10,7 +10,7 @@
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%23D35400'/><text y='24' x='5' font-size='22' font-family='serif' font-weight='900' fill='white'>W</text></svg>" />
 
   <!-- Global design system -->
-  <link rel="stylesheet" href="/css/style.css" />
+  <link rel="stylesheet" href="css/style.css" />
 
   <style>
     /* ── Landing Page Specific Styles ── */
@@ -1135,10 +1135,10 @@
   </footer>
 
   <!-- ── Scripts ───────────────────────────────────────────── -->
-  <script type="module" src="../js/app.js"></script>
+  <script type="module" src="js/app.js"></script>
   <script type="module">
     /* Landing-page specific micro-scripts */
-    import { isPeakHour } from '../js/utils/pricing.js';
+    import { isPeakHour } from 'js/utils/pricing.js';
 
     /* Dynamic footer year */
     document.getElementById('footer-year').textContent = new Date().getFullYear();

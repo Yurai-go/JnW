@@ -4,8 +4,8 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Welfmart — Menu</title>
-  <link rel="stylesheet" href="/css/style.css" />
-  <link rel="stylesheet" href="/css/store.css" />
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/store.css" />
 </head>
 <body>
 
@@ -111,12 +111,12 @@
 
   <script type="module">
     // 1. Import your core storefront logic directly into the page lifecycle
-    import { runSeeder } from '../js/utils/seed.js';
-    import { storageGet } from '../js/utils/storage.js';
+    import { runSeeder } from 'js/utils/seed.js';
+    import { storageGet } from 'js/utils/storage.js';
 
     // 2. Ensure everything initializes cleanly inside a single execution context
-    import '../js/app.js';
-    import '../js/store.js';
+    import 'js/app.js';
+    import 'js/store.js';
   </script>
 </body>
 </html>
