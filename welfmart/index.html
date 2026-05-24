@@ -1137,8 +1137,9 @@
   <!-- ── Scripts ───────────────────────────────────────────── -->
   <script type="module" src="js/app.js"></script>
   <script type="module">
+
     /* Landing-page specific micro-scripts */
-    import { isPeakHour } from 'js/utils/pricing.js';
+    import { isPeakHour } from './js/utils/pricing.js';
 
     /* Dynamic footer year */
     document.getElementById('footer-year').textContent = new Date().getFullYear();
