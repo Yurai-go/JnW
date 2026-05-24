@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Welfmart — Checkout</title>
+  <link rel="stylesheet" href="/css/style.css" />
+  <link rel="stylesheet" href="/css/transaction.css" />
+</head>
+<body>
+
+  <nav class="wm-nav" role="navigation">
+    <div class="wm-nav__inner">
+      <a href="index.html" class="wm-nav__logo" aria-label="Welfmart Home">
+        <div class="wm-nav__logo-mark" aria-hidden="true">W</div>
+        <span class="wm-nav__logo-text">Welf<span>mart</span></span>
+      </a>
+
+      <ul class="wm-nav__links" role="list">
+        <li><a href="index.html"       class="wm-nav__link" data-page="index.html">Home</a></li>
+        <li><a href="store.html"       class="wm-nav__link" data-page="store.html">Menu</a></li>
+        <li><a href="dashboard.html"   class="wm-nav__link" data-page="dashboard.html">My Orders</a></li>
+      </ul>
+
+      <div class="wm-nav__actions">
+        <div id="nav-auth-area" style="display:flex; gap:var(--space-2);">
+          <a href="auth.html?mode=login"    class="btn btn-secondary btn-sm">Sign In</a>
+          <a href="auth.html?mode=register" class="btn btn-primary   btn-sm">Join Free</a>
+        </div>
+        <div id="nav-user-area" style="display:none; align-items:center; gap:var(--space-3);">
+          <a href="dashboard.html" class="wm-nav__link" style="color:rgba(255,255,255,.75); font-size:var(--text-sm);">
+            👋 <span id="nav-user-name">Account</span>
+          </a>
+          <button id="nav-logout-btn" class="btn btn-ghost btn-sm" style="border-color:rgba(255,255,255,.2); color:rgba(255,255,255,.65);">
+            Sign Out
+          </button>
+        </div>
+        <button class="wm-nav__hamburger">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <main class="checkout-page container section-pad-sm">
+    
+    <header class="store-header reveal">
+      <h1 class="store-header__title">Secure <em>Checkout</em></h1>
+      <p class="store-header__desc">Review your items and choose how you want to receive your order.</p>
+    </header>
+
+    <div id="checkout-empty" class="checkout-empty" style="display: none;">
+      <div class="checkout-empty__icon">🛒</div>
+      <h3>Your cart is empty</h3>
+      <p>Looks like you haven't added any items to your order yet.</p>
+      <a href="store.html" class="btn btn-primary" style="margin-top: var(--space-4);">Browse Menu</a>
+    </div>
+
+    <div id="checkout-content" class="checkout-layout reveal reveal-delay-1" style="display: none;">
+      
+      <section class="checkout-form-section">
+        <form id="checkout-form">
+          <div class="card checkout-card">
+            <div class="card__header">
+              <h2 class="checkout-card__title">Order Method</h2>
+            </div>
+            <div class="card__body">
+              <div class="method-toggles">
+                <label class="method-option selected" id="label-delivery">
+                  <input type="radio" name="orderMethod" value="delivery" checked />
+                  <div class="method-option__icon">📍</div>
+                  <div class="method-option__text">
+                    <span class="method-option__title">Classroom Delivery</span>
+                    <span class="method-option__desc">Delivered right to your desk</span>
+                  </div>
+                </label>
+                
+                <label class="method-option" id="label-queue">
+                  <input type="radio" name="orderMethod" value="queue" />
+                  <div class="method-option__icon">⏱️</div>
+                  <div class="method-option__text">
+                    <span class="method-option__title">Online Queue</span>
+                    <span class="method-option__desc">Pick up at the canteen window</span>
+                  </div>
+                </label>
+              </div>
+
+              <div class="form-group" id="delivery-details" style="margin-top: var(--space-6);">
+                <label for="deliveryRoom" class="form-label">Delivery Room / Location</label>
+                <input type="text" id="deliveryRoom" class="form-input" placeholder="e.g., Room 5B, Teacher's Lounge" required />
+              </div>
+
+              <div class="alert alert-warning" id="queue-details" style="display: none; margin-top: var(--space-6);">
+                <div style="font-size: 16px;">⚠️</div>
+                <div>
+                  <strong>Peak Hour Notice:</strong>
+                  A small Rp 2.000 queueing fee may apply during peak break hours (10:00 - 13:00) to manage canteen capacity.
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="card checkout-card" style="margin-top: var(--space-6);">
+            <div class="card__header">
+              <h2 class="checkout-card__title">Order Notes (Optional)</h2>
+            </div>
+            <div class="card__body">
+              <textarea id="orderNotes" class="form-textarea" placeholder="Any special requests? (e.g., extra spicy, no ice)"></textarea>
+            </div>
+          </div>
+        </form>
+      </section>
+
+      <aside class="checkout-summary-section">
+        <div class="card summary-card">
+          <div class="card__header">
+            <h2 class="checkout-card__title">Order Summary</h2>
+          </div>
+          <div class="card__body">
+            
+            <div id="summary-items" class="summary-items">
+              </div>
+
+            <hr class="divider" />
+
+            <div class="summary-totals">
+              <div class="summary-row">
+                <span class="summary-row__label">Subtotal</span>
+                <span class="summary-row__value" id="summary-subtotal">Rp 0</span>
+              </div>
+              
+              <div class="summary-row summary-row--discount" id="row-discount" style="display: none;">
+                <span class="summary-row__label">
+                  Teacher Discount (<span id="discount-percent">20</span>%)
+                </span>
+                <span class="summary-row__value text-success" id="summary-discount">-Rp 0</span>
+              </div>
+
+              <div class="summary-row summary-row--fee" id="row-queue-fee" style="display: none;">
+                <span class="summary-row__label">Peak Queue Fee</span>
+                <span class="summary-row__value text-rust" id="summary-queue-fee">+Rp 0</span>
+              </div>
+            </div>
+
+            <hr class="divider" />
+
+            <div class="summary-final">
+              <span class="summary-final__label">Total</span>
+              <span class="summary-final__value" id="summary-total">Rp 0</span>
+            </div>
+            
+            <div id="auth-warning" class="alert alert-danger" style="display:none; margin-top:var(--space-4);">
+              You must be signed in to place an order.
+            </div>
+
+            <button type="button" id="btn-submit-order" class="btn btn-primary w-full" style="margin-top: var(--space-6); padding-block: 1em;">
+              Place Order Now
+            </button>
+          </div>
+        </div>
+      </aside>
+
+    </div>
+  </main>
+
+  <script type="module" src="../js/utils/seed.js"></script>
+  <script type="module" src="../js/app.js"></script>
+  <script type="module" src="../js/transaction.js"></script>
+</body>
+</html>

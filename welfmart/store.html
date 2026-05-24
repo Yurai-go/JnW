@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Welfmart — Menu</title>
+  <link rel="stylesheet" href="/css/style.css" />
+  <link rel="stylesheet" href="/css/store.css" />
+</head>
+<body>
+
+  <nav class="wm-nav" role="navigation" aria-label="Main navigation">
+    <div class="wm-nav__inner">
+      <a href="index.html" class="wm-nav__logo" aria-label="Welfmart Home">
+        <div class="wm-nav__logo-mark" aria-hidden="true">W</div>
+        <span class="wm-nav__logo-text">Welf<span>mart</span></span>
+      </a>
+
+      <ul class="wm-nav__links" role="list">
+        <li><a href="index.html"       class="wm-nav__link" data-page="index.html">Home</a></li>
+        <li><a href="store.html"       class="wm-nav__link active" data-page="store.html">Menu</a></li>
+        <li><a href="dashboard.html"   class="wm-nav__link" data-page="dashboard.html">My Orders</a></li>
+        <li><a href="index.html#how-it-works" class="wm-nav__link">How It Works</a></li>
+      </ul>
+
+      <div class="wm-nav__actions">
+        <a href="transaction.html" class="wm-nav__cart-btn" aria-label="View cart">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/>
+            <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/>
+          </svg>
+          <span class="wm-nav__cart-badge" aria-live="polite"></span>
+        </a>
+
+        <div id="nav-auth-area" style="display:flex; gap:var(--space-2);">
+          <a href="auth.html?mode=login"    class="btn btn-secondary btn-sm">Sign In</a>
+          <a href="auth.html?mode=register" class="btn btn-primary   btn-sm">Join Free</a>
+        </div>
+
+        <div id="nav-user-area" style="display:none; align-items:center; gap:var(--space-3);">
+          <a href="dashboard.html" class="wm-nav__link" style="color:rgba(255,255,255,.75); font-size:var(--text-sm);">
+            👋 <span id="nav-user-name">Account</span>
+          </a>
+          <button id="nav-logout-btn" class="btn btn-ghost btn-sm" style="border-color:rgba(255,255,255,.2); color:rgba(255,255,255,.65);">
+            Sign Out
+          </button>
+        </div>
+
+        <button class="wm-nav__hamburger" aria-label="Toggle mobile menu" aria-expanded="false">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <main class="store-page container section-pad-sm">
+    
+    <header class="store-header reveal">
+      <h1 class="store-header__title">Canteen <em>Menu</em></h1>
+      <p class="store-header__desc">Order your favorite meals and snacks. Freshly prepared, ready for pick-up or delivery.</p>
+    </header>
+
+    <div class="store-layout reveal reveal-delay-1">
+      
+      <aside class="store-sidebar">
+        <div class="store-sidebar__inner">
+          <h2 class="store-sidebar__title">Categories</h2>
+          <ul class="store-filter-list" id="category-filters">
+            <li><button class="store-filter-btn active" data-category="All">All Items</button></li>
+            <li><button class="store-filter-btn" data-category="Food"><span class="emoji">🍱</span> Food</button></li>
+            <li><button class="store-filter-btn" data-category="Drink"><span class="emoji">🧃</span> Drink</button></li>
+            <li><button class="store-filter-btn" data-category="Snack"><span class="emoji">🍩</span> Snack</button></li>
+          </ul>
+        </div>
+      </aside>
+
+      <section class="store-content">
+        <div id="store-empty-state" class="store-empty" style="display: none;">
+          <div class="store-empty__icon">🍽️</div>
+          <h3>No items found</h3>
+          <p>We couldn't find any items in this category right now.</p>
+        </div>
+
+        <div class="store-grid" id="product-grid">
+          </div>
+      </section>
+
+    </div>
+  </main>
+
+  <div class="floating-cart" id="floating-cart">
+    <div class="floating-cart__inner">
+      <div class="floating-cart__info">
+        <div class="floating-cart__icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--color-rust)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/>
+            <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/>
+          </svg>
+          <span class="floating-cart__badge" id="floating-cart-count">0</span>
+        </div>
+        <div>
+          <div class="floating-cart__label">Total Estimated</div>
+          <div class="floating-cart__total" id="floating-cart-total">Rp 0</div>
+        </div>
+      </div>
+      <a href="transaction.html" class="btn btn-primary">
+        View Cart & Checkout →
+      </a>
+    </div>
+  </div>
+
+  <script type="module">
+    // 1. Import your core storefront logic directly into the page lifecycle
+    import { runSeeder } from '../js/utils/seed.js';
+    import { storageGet } from '../js/utils/storage.js';
+
+    // 2. Ensure everything initializes cleanly inside a single execution context
+    import '../js/app.js';
+    import '../js/store.js';
+  </script>
+</body>
+</html>

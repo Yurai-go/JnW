@@ -1,0 +1,231 @@
+/* ============================================================
+   WELFMART — Admin Dashboard Styles
+   admin.css
+   ============================================================ */
+
+.admin-layout {
+  display: grid;
+  grid-template-columns: 260px 1fr;
+  gap: var(--space-8);
+  align-items: start;
+}
+
+/* ── Sidebar Tabs ────────────────────────────────────────── */
+.admin-sidebar {
+  position: sticky;
+  top: calc(var(--nav-height) + var(--space-6));
+}
+
+.admin-sidebar__inner {
+  background-color: #fff;
+  border: 1px solid var(--color-alabaster-dark);
+  border-radius: var(--radius-xl);
+  padding: var(--space-4);
+  box-shadow: var(--shadow-xs);
+}
+
+.admin-tabs {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.admin-tab-btn {
+  width: 100%;
+  text-align: left;
+  padding: var(--space-3) var(--space-4);
+  background: transparent;
+  border: none;
+  border-radius: var(--radius-md);
+  font-family: var(--font-body);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-medium);
+  color: var(--color-slate);
+  cursor: pointer;
+  transition: background-color var(--transition-fast), color var(--transition-fast);
+}
+
+.admin-tab-btn:hover {
+  background-color: var(--color-alabaster-mid);
+}
+
+.admin-tab-btn.active {
+  background-color: var(--color-slate);
+  color: #fff;
+  font-weight: var(--weight-semibold);
+}
+
+/* ── Content Panels ──────────────────────────────────────── */
+.admin-panel__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--space-4);
+  flex-wrap: wrap;
+  gap: var(--space-3);
+}
+
+.admin-panel__header h2 {
+  font-size: var(--text-xl);
+  font-weight: var(--weight-bold);
+  color: var(--color-slate);
+}
+
+.admin-storage-banner {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+  background: linear-gradient(135deg, rgba(52, 152, 219, 0.10), rgba(211, 84, 0, 0.08));
+  border: 1px solid rgba(52, 152, 219, 0.22);
+  border-radius: var(--radius-xl);
+  padding: var(--space-4) var(--space-5);
+  margin-bottom: var(--space-6);
+  box-shadow: var(--shadow-xs);
+}
+
+.admin-storage-banner__icon {
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius-lg);
+  background-color: rgba(255,255,255,.9);
+  display: grid;
+  place-items: center;
+  font-size: 20px;
+  flex-shrink: 0;
+}
+
+.admin-storage-banner__title {
+  font-size: var(--text-sm);
+  font-weight: var(--weight-semibold);
+  color: var(--color-slate);
+  margin-bottom: var(--space-1);
+}
+
+.admin-storage-banner__text {
+  font-size: var(--text-sm);
+  line-height: var(--leading-loose);
+  color: var(--color-slate-muted);
+  margin: 0;
+}
+
+/* ── Inventory Add Form ─────────────────────────────────── */
+.admin-inventory-form {
+  background-color: #fff;
+  border: 1px solid var(--color-alabaster-dark);
+  border-radius: var(--radius-xl);
+  padding: var(--space-5);
+  box-shadow: var(--shadow-xs);
+  margin-bottom: var(--space-5);
+}
+
+.admin-inventory-form__title {
+  font-size: var(--text-base);
+  font-weight: var(--weight-semibold);
+  color: var(--color-slate);
+  margin-bottom: var(--space-1);
+}
+
+.admin-form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-4);
+}
+
+.form-field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.admin-form-field--full {
+  grid-column: 1 / -1;
+}
+
+.admin-form-actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: var(--space-4);
+}
+
+/* ── Tables ──────────────────────────────────────────────── */
+.admin-table-wrapper {
+  background-color: #fff;
+  border: 1px solid var(--color-alabaster-dark);
+  border-radius: var(--radius-xl);
+  overflow-x: auto;
+  box-shadow: var(--shadow-xs);
+}
+
+.admin-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+  font-size: var(--text-sm);
+}
+
+.admin-table th {
+  background-color: var(--color-alabaster-mid);
+  color: var(--color-slate-muted);
+  font-weight: var(--weight-semibold);
+  padding: var(--space-4) var(--space-5);
+  font-size: var(--text-xs);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  border-bottom: 1px solid var(--color-alabaster-dark);
+}
+
+.admin-table td {
+  padding: var(--space-4) var(--space-5);
+  border-bottom: 1px solid var(--color-alabaster-dark);
+  color: var(--color-slate);
+  vertical-align: middle;
+}
+
+.admin-table tr:last-child td {
+  border-bottom: none;
+}
+
+.admin-table tr:hover {
+  background-color: var(--color-alabaster);
+}
+
+/* Table specific utilities */
+.td-item-name {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-weight: var(--weight-semibold);
+}
+
+.admin-action-group {
+  display: flex;
+  gap: var(--space-2);
+}
+
+/* Highlight rows for suspicious user accounts */
+.row-warning td {
+  background-color: var(--color-warning-tint);
+}
+
+/* ── Responsive ──────────────────────────────────────────── */
+@media (max-width: 900px) {
+  .admin-layout {
+    grid-template-columns: 1fr;
+  }
+  .admin-sidebar {
+    position: static;
+  }
+  .admin-tabs {
+    flex-direction: row;
+    overflow-x: auto;
+  }
+  .admin-tab-btn {
+    white-space: nowrap;
+  }
+  .admin-form-grid {
+    grid-template-columns: 1fr;
+  }
+  .admin-form-field--full {
+    grid-column: auto;
+  }
+}

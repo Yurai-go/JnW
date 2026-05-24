@@ -1,0 +1,220 @@
+/* ============================================================
+   WELFMART — Checkout Page Styles
+   transaction.css
+   ============================================================ */
+
+.checkout-layout {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr;
+  gap: var(--space-10);
+  align-items: start;
+}
+
+.checkout-empty {
+  text-align: center;
+  padding: var(--space-20) var(--space-6);
+  background-color: #fff;
+  border: 1px dashed var(--color-slate-faint);
+  border-radius: var(--radius-xl);
+}
+
+.checkout-empty__icon {
+  font-size: 48px;
+  margin-bottom: var(--space-4);
+}
+
+.checkout-empty h3 {
+  font-family: var(--font-display);
+  font-size: var(--text-2xl);
+  color: var(--color-slate);
+}
+
+.checkout-empty p {
+  color: var(--color-slate-muted);
+}
+
+.checkout-card__title {
+  font-size: var(--text-lg);
+  font-weight: var(--weight-bold);
+  color: var(--color-slate);
+}
+
+/* ── Order Method Toggles ───────────────────────────────── */
+.method-toggles {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-4);
+}
+
+.method-option {
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+  padding: var(--space-4);
+  background-color: var(--color-alabaster);
+  border: 2px solid var(--color-slate-faint);
+  border-radius: var(--radius-lg);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+/* Hide native radio button */
+.method-option input[type="radio"] {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.method-option:hover {
+  border-color: var(--color-slate-muted);
+  background-color: #fff;
+}
+
+.method-option.selected {
+  border-color: var(--color-rust);
+  background-color: var(--color-rust-tint);
+}
+
+.method-option__icon {
+  font-size: 24px;
+  line-height: 1;
+}
+
+.method-option__text {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.method-option__title {
+  font-size: var(--text-sm);
+  font-weight: var(--weight-bold);
+  color: var(--color-slate);
+}
+
+.method-option.selected .method-option__title {
+  color: var(--color-rust-deep);
+}
+
+.method-option__desc {
+  font-size: var(--text-xs);
+  color: var(--color-slate-muted);
+  line-height: var(--leading-tight);
+}
+
+/* ── Summary Items ───────────────────────────────────────── */
+.summary-card {
+  position: sticky;
+  top: calc(var(--nav-height) + var(--space-6));
+}
+
+.summary-items {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.summary-item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.summary-item__visual {
+  width: 48px;
+  height: 48px;
+  background-color: var(--color-alabaster-dark);
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  flex-shrink: 0;
+}
+
+.summary-item__details {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.summary-item__name {
+  font-size: var(--text-sm);
+  font-weight: var(--weight-bold);
+  color: var(--color-slate);
+}
+
+.summary-item__meta {
+  font-size: var(--text-xs);
+  color: var(--color-slate-muted);
+}
+
+.summary-item__price {
+  font-size: var(--text-sm);
+  font-weight: var(--weight-bold);
+  color: var(--color-slate);
+}
+
+/* ── Totals ──────────────────────────────────────────────── */
+.summary-totals {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.summary-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: var(--text-sm);
+}
+
+.summary-row__label {
+  color: var(--color-slate-muted);
+}
+
+.summary-row__value {
+  font-weight: var(--weight-bold);
+  color: var(--color-slate);
+}
+
+.text-success { color: var(--color-success) !important; }
+.text-rust { color: var(--color-rust) !important; }
+
+.summary-final {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.summary-final__label {
+  font-size: var(--text-base);
+  font-weight: var(--weight-bold);
+  color: var(--color-slate);
+}
+
+.summary-final__value {
+  font-family: var(--font-display);
+  font-size: var(--text-2xl);
+  font-weight: var(--weight-bold);
+  color: var(--color-slate);
+}
+
+/* ── Responsive ──────────────────────────────────────────── */
+@media (max-width: 900px) {
+  .checkout-layout {
+    grid-template-columns: 1fr;
+  }
+  .summary-card {
+    position: static;
+  }
+}
+
+@media (max-width: 600px) {
+  .method-toggles {
+    grid-template-columns: 1fr;
+  }
+}

@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Welfmart — Admin Dashboard</title>
+  <link rel="stylesheet" href="/css/style.css" />
+  <link rel="stylesheet" href="/css/admin.css" />
+</head>
+<body>
+
+  <nav class="wm-nav" role="navigation">
+    <div class="wm-nav__inner">
+      <a href="index.html" class="wm-nav__logo">
+        <div class="wm-nav__logo-mark" aria-hidden="true">W</div>
+        <span class="wm-nav__logo-text">Welf<span>mart</span> <span class="badge badge-rust" style="font-size: 10px; margin-left: 8px;">ADMIN</span></span>
+      </a>
+
+      <div class="wm-nav__actions">
+        <div id="nav-user-area" style="display:flex; align-items:center; gap:var(--space-3);">
+          <span style="color:rgba(255,255,255,.75); font-size:var(--text-sm);">
+            👨‍💻 <span id="nav-user-name">Admin</span>
+          </span>
+          <button id="nav-logout-btn" class="btn btn-ghost btn-sm" style="border-color:rgba(255,255,255,.2); color:rgba(255,255,255,.65);">
+            Exit Admin
+          </button>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <main class="admin-page container section-pad-sm">
+    
+    <header class="store-header">
+      <h1 class="store-header__title">Canteen <em>Command Center</em></h1>
+      <p class="store-header__desc">Manage live orders, update menu inventory, and verify user roles.</p>
+    </header>
+
+    <div class="admin-storage-banner" role="status" aria-live="polite">
+      <div class="admin-storage-banner__icon" aria-hidden="true">🗂️</div>
+      <div>
+        <p class="admin-storage-banner__title">Local menu manager</p>
+        <p class="admin-storage-banner__text">Menu changes are saved in your browser’s local storage, so updates appear instantly on the public menu and won’t affect the live backend.</p>
+      </div>
+    </div>
+
+    <div class="admin-layout">
+      
+      <aside class="admin-sidebar">
+        <div class="admin-sidebar__inner">
+          <ul class="admin-tabs" id="admin-tabs" role="tablist">
+            <li><button class="admin-tab-btn active" data-target="panel-orders" role="tab">Live Orders</button></li>
+            <li><button class="admin-tab-btn" data-target="panel-inventory" role="tab">Inventory Management</button></li>
+            <li><button class="admin-tab-btn" data-target="panel-users" role="tab">User Roles & Security</button></li>
+          </ul>
+        </div>
+      </aside>
+
+      <section class="admin-content">
+        
+        <div id="panel-orders" class="admin-panel active" role="tabpanel">
+          <div class="admin-panel__header">
+            <h2>Live Orders</h2>
+            <button class="btn btn-secondary btn-sm js-refresh-orders" style="color: var(--color-slate); border-color: var(--color-slate-faint);">↻ Refresh</button>
+          </div>
+          <div class="admin-table-wrapper">
+            <table class="admin-table">
+              <thead>
+                <tr>
+                  <th>Order ID</th>
+                  <th>Customer</th>
+                  <th>Method</th>
+                  <th>Total</th>
+                  <th>Status</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody id="table-body-orders">
+                </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div id="panel-inventory" class="admin-panel" role="tabpanel" style="display: none;">
+          <div class="admin-panel__header">
+            <h2>Inventory Management</h2>
+          </div>
+
+          <div class="admin-inventory-form">
+            <div class="admin-inventory-form__title">Add New Menu Item</div>
+            <p class="form-helper">Create menu items locally so the public menu updates immediately. Use Delete to remove items from the saved catalog.</p>
+
+            <form id="inventory-form">
+              <div class="admin-form-grid">
+                <label class="form-field">
+                  <span class="form-label">Item Name</span>
+                  <input class="form-input" type="text" name="name" placeholder="e.g. Mie Goreng Deluxe" required />
+                </label>
+
+                <label class="form-field">
+                  <span class="form-label">Category</span>
+                  <select class="form-select" name="category" required>
+                    <option value="Food">Food</option>
+                    <option value="Drink">Drink</option>
+                    <option value="Snack">Snack</option>
+                  </select>
+                </label>
+
+                <label class="form-field">
+                  <span class="form-label">Price (IDR)</span>
+                  <input class="form-input" type="number" name="price" min="1" step="1" placeholder="12000" required />
+                </label>
+
+                <label class="form-field">
+                  <span class="form-label">Emoji</span>
+                  <input class="form-input" type="text" name="emoji" maxlength="4" placeholder="🍜" value="🍽️" required />
+                </label>
+
+                <label class="form-field">
+                  <span class="form-label">Initial Stock</span>
+                  <input class="form-input" type="number" name="stock" min="0" step="1" placeholder="20" required />
+                </label>
+
+                <label class="form-field admin-form-field--full">
+                  <span class="form-label">Description</span>
+                  <textarea class="form-textarea" name="description" placeholder="Brief description shown on the menu." rows="3"></textarea>
+                </label>
+              </div>
+
+              <div class="admin-form-actions">
+                <button type="submit" class="btn btn-primary">Add Menu Item</button>
+              </div>
+            </form>
+          </div>
+
+          <div class="admin-table-wrapper">
+            <table class="admin-table">
+              <thead>
+                <tr>
+                  <th>Item</th>
+                  <th>Category</th>
+                  <th>Price (IDR)</th>
+                  <th>Stock Status</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="table-body-inventory">
+                </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div id="panel-users" class="admin-panel" role="tabpanel" style="display: none;">
+          <div class="admin-panel__header">
+            <h2>User Roles & Security</h2>
+            <p style="font-size: var(--text-xs); color: var(--color-slate-muted);">Verify accounts claiming Teacher/Ustadz discounts.</p>
+          </div>
+          <div class="admin-table-wrapper">
+            <table class="admin-table">
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Email</th>
+                  <th>Current Role</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody id="table-body-users">
+                </tbody>
+            </table>
+          </div>
+        </div>
+
+      </section>
+    </div>
+  </main>
+
+  <script type="module" src="../js/utils/seed.js"></script>
+  <script type="module" src="../js/app.js"></script>
+  <script type="module" src="../js/admin.js"></script>
+</body>
+</html>

@@ -1,0 +1,396 @@
+/* ============================================================
+   WELFMART — Store Page Styles
+   store.css · Imported after style.css on store.html only
+   ============================================================ */
+
+/* ── 1. Store Header ─────────────────────────────────────── */
+.store-header {
+  margin-bottom: var(--space-10);
+  border-bottom: 1px solid var(--color-alabaster-dark);
+  padding-bottom: var(--space-6);
+}
+
+.store-header__title {
+  font-family: var(--font-display);
+  font-size: var(--text-4xl);
+  font-weight: var(--weight-bold);
+  color: var(--color-slate);
+  letter-spacing: -1px;
+  margin-bottom: var(--space-2);
+}
+
+.store-header__title em {
+  font-style: italic;
+  color: var(--color-rust);
+}
+
+.store-header__desc {
+  font-size: var(--text-base);
+  color: var(--color-slate-muted);
+  max-width: 600px;
+}
+
+/* ── 2. Layout Grid ──────────────────────────────────────── */
+.store-layout {
+  display: grid;
+  grid-template-columns: 240px 1fr;
+  gap: var(--space-10);
+  align-items: start;
+}
+
+/* ── 3. Sidebar (Filters) ────────────────────────────────── */
+.store-sidebar {
+  position: sticky;
+  top: calc(var(--nav-height) + var(--space-6));
+}
+
+.store-sidebar__inner {
+  background-color: #fff;
+  border: 1px solid var(--color-alabaster-dark);
+  border-radius: var(--radius-xl);
+  padding: var(--space-6);
+  box-shadow: var(--shadow-xs);
+}
+
+.store-sidebar__title {
+  font-size: var(--text-xs);
+  font-weight: var(--weight-semibold);
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  color: var(--color-slate-muted);
+  margin-bottom: var(--space-4);
+}
+
+.store-filter-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.store-filter-btn {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-3) var(--space-4);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-medium);
+  font-family: var(--font-body);
+  color: var(--color-slate);
+  background: transparent;
+  border: none;
+  border-radius: var(--radius-lg);
+  cursor: pointer;
+  text-align: left;
+  transition: background-color var(--transition-fast), color var(--transition-fast);
+}
+
+.store-filter-btn .emoji {
+  font-size: 1.1rem;
+}
+
+.store-filter-btn:hover {
+  background-color: var(--color-alabaster-mid);
+}
+
+/* Active State (Rust themed) */
+.store-filter-btn.active {
+  background-color: var(--color-rust-tint);
+  color: var(--color-rust-deep);
+  font-weight: var(--weight-semibold);
+}
+
+/* ── 4. Main Product Grid ────────────────────────────────── */
+.store-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: var(--space-6);
+  padding-bottom: var(--space-32); /* Extra padding for floating cart */
+}
+
+.store-empty {
+  text-align: center;
+  padding: var(--space-12) var(--space-4);
+  background-color: #fff;
+  border: 1px dashed var(--color-slate-faint);
+  border-radius: var(--radius-xl);
+}
+
+.store-empty__icon {
+  font-size: 40px;
+  margin-bottom: var(--space-4);
+  opacity: 0.5;
+}
+
+.store-empty h3 {
+  font-family: var(--font-display);
+  color: var(--color-slate);
+  font-size: var(--text-xl);
+  margin-bottom: var(--space-2);
+}
+
+.store-empty p {
+  color: var(--color-slate-muted);
+  font-size: var(--text-sm);
+}
+
+/* ── 5. Product Card ─────────────────────────────────────── */
+.product-card {
+  display: flex;
+  flex-direction: column;
+  background-color: #fff;
+  border: 1px solid var(--color-alabaster-dark);
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+  box-shadow: var(--shadow-xs);
+  transition: 
+    box-shadow var(--transition-base),
+    transform var(--transition-base),
+    border-color var(--transition-base);
+  height: 100%;
+}
+
+.product-card:hover {
+  box-shadow: var(--shadow-lg);
+  transform: translateY(-4px);
+  border-color: var(--color-slate-faint);
+}
+
+/* Visual Emoji Container replacing images */
+.product-card__visual {
+  height: 160px;
+  background: radial-gradient(circle at center, var(--color-alabaster-mid) 0%, var(--color-alabaster) 100%);
+  border-bottom: 1px solid var(--color-alabaster-dark);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 80px;
+  position: relative;
+}
+
+/* Out of stock overlay */
+.product-card.out-of-stock .product-card__visual::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-color: rgba(255,255,255,0.6);
+  backdrop-filter: blur(2px);
+}
+
+.product-card__content {
+  padding: var(--space-5);
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.product-card__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: var(--space-2);
+  margin-bottom: var(--space-2);
+}
+
+.product-card__title {
+  font-size: var(--text-base);
+  font-weight: var(--weight-bold);
+  color: var(--color-slate);
+  line-height: var(--leading-snug);
+}
+
+.product-card__price {
+  font-family: var(--font-display);
+  font-size: var(--text-lg);
+  font-weight: var(--weight-bold);
+  color: var(--color-rust);
+  white-space: nowrap;
+}
+
+.product-card__desc {
+  font-size: var(--text-xs);
+  color: var(--color-slate-muted);
+  line-height: var(--leading-loose);
+  margin-bottom: var(--space-5);
+  flex: 1;
+}
+
+.product-card__footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: auto;
+}
+
+.product-card__stock {
+  font-size: var(--text-xs);
+  font-weight: var(--weight-medium);
+}
+
+.stock-high { color: var(--color-success); }
+.stock-low  { color: var(--color-warning); }
+.stock-none { color: var(--color-danger); }
+
+/* Quantity Controls injected when item is in cart */
+.product-card__qty-control {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  background-color: var(--color-alabaster);
+  border: 1px solid var(--color-alabaster-dark);
+  border-radius: var(--radius-md);
+  padding: 2px;
+}
+
+.qty-btn {
+  background: #fff;
+  border: 1px solid var(--color-alabaster-dark);
+  color: var(--color-slate);
+  width: 28px;
+  height: 28px;
+  border-radius: var(--radius-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.qty-btn:hover {
+  background-color: var(--color-slate-faint);
+  border-color: var(--color-slate-muted);
+}
+
+.qty-display {
+  font-size: var(--text-sm);
+  font-weight: var(--weight-bold);
+  color: var(--color-slate);
+  min-width: 20px;
+  text-align: center;
+}
+
+/* ── 6. Floating Cart Summary ────────────────────────────── */
+.floating-cart {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background-color: #fff;
+  border-top: 1px solid var(--color-alabaster-dark);
+  box-shadow: 0 -10px 40px rgba(44,62,80,.08);
+  padding: var(--space-4) 0;
+  z-index: 900;
+  transform: translateY(150%);
+  transition: transform var(--transition-base);
+}
+
+/* Applied by JS when cart is not empty */
+.floating-cart.visible {
+  transform: translateY(0);
+}
+
+.floating-cart__inner {
+  max-width: var(--container-max);
+  margin-inline: auto;
+  padding-inline: var(--container-pad);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.floating-cart__info {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+}
+
+.floating-cart__icon {
+  position: relative;
+  width: 48px;
+  height: 48px;
+  background-color: var(--color-rust-tint);
+  border-radius: var(--radius-lg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.floating-cart__badge {
+  position: absolute;
+  top: -6px;
+  right: -6px;
+  background-color: var(--color-rust);
+  color: #fff;
+  font-size: 11px;
+  font-weight: var(--weight-bold);
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid #fff;
+}
+
+.floating-cart__label {
+  font-size: var(--text-xs);
+  color: var(--color-slate-muted);
+  font-weight: var(--weight-medium);
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  margin-bottom: 2px;
+}
+
+.floating-cart__total {
+  font-family: var(--font-display);
+  font-size: var(--text-2xl);
+  font-weight: var(--weight-bold);
+  color: var(--color-slate);
+  line-height: 1;
+}
+
+/* ── 7. Responsive Breakpoints ───────────────────────────── */
+@media (max-width: 900px) {
+  .store-layout {
+    grid-template-columns: 1fr;
+    gap: var(--space-6);
+  }
+
+  .store-sidebar {
+    position: static;
+  }
+
+  .store-filter-list {
+    flex-direction: row;
+    overflow-x: auto;
+    padding-bottom: var(--space-2);
+    /* Hide scrollbar */
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  .store-filter-list::-webkit-scrollbar {
+    display: none;
+  }
+
+  .store-filter-btn {
+    white-space: nowrap;
+    padding: var(--space-2) var(--space-4);
+  }
+}
+
+@media (max-width: 600px) {
+  .store-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .floating-cart__total {
+    font-size: var(--text-xl);
+  }
+
+  .floating-cart__inner .btn {
+    padding: 0.6em 1em;
+    font-size: var(--text-sm);
+  }
+}
