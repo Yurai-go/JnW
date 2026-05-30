@@ -16,7 +16,8 @@
         <span class="wm-nav__logo-text">Welf<span>mart</span> <span class="badge badge-rust" style="font-size: 10px; margin-left: 8px;">ADMIN</span></span>
       </a>
 
-      <div class="wm-nav__actions">
+      <div class="wm-nav__actions" style="align-items:center; gap:var(--space-3);">
+        <a href="index.html" class="btn btn-secondary btn-sm" style="color: #fff;">Back to Home</a>
         <div id="nav-user-area" style="display:flex; align-items:center; gap:var(--space-3);">
           <span style="color:rgba(255,255,255,.75); font-size:var(--text-sm);">
             👨‍💻 <span id="nav-user-name">Admin</span>
@@ -116,19 +117,24 @@
                   <input class="form-input" type="text" name="emoji" maxlength="4" placeholder="🍜" value="🍽️" required />
                 </label>
 
+                  <label class="form-field">
+                    <span class="form-label">Image URL (optional)</span>
+                    <input class="form-input" type="url" name="image" placeholder="https://example.com/photo.jpg" />
+                  </label>
+
                 <label class="form-field">
-                  <span class="form-label">Initial Stock</span>
-                  <input class="form-input" type="number" name="stock" min="0" step="1" placeholder="20" required />
+                  <span class="form-label">Upload Image</span>
+                  <input class="form-input" type="file" accept="image/*" name="imageFile" />
                 </label>
 
-                <label class="form-field admin-form-field--full">
-                  <span class="form-label">Description</span>
+                <label class="form-field">
                   <textarea class="form-textarea" name="description" placeholder="Brief description shown on the menu." rows="3"></textarea>
                 </label>
               </div>
 
               <div class="admin-form-actions">
                 <button type="submit" class="btn btn-primary">Add Menu Item</button>
+                <a href="store.html" class="btn btn-ghost" style="margin-left:8px;">Back to Store</a>
               </div>
             </form>
           </div>
@@ -174,6 +180,70 @@
       </section>
     </div>
   </main>
+
+  <!-- Edit Item Modal -->
+  <div id="edit-item-modal" class="modal" aria-hidden="true">
+    <div class="modal__backdrop" data-action="close"></div>
+    <div class="modal__panel" role="dialog" aria-modal="true" aria-label="Edit menu item">
+      <header class="modal__header">
+        <h3 class="modal__title">Edit Menu Item</h3>
+        <button class="btn btn-ghost" data-action="close">✕</button>
+      </header>
+
+      <form id="edit-item-form" class="modal__form">
+        <input type="hidden" name="id" />
+
+        <label class="form-field">
+          <span class="form-label">Name</span>
+          <input class="form-input" name="name" required />
+        </label>
+
+        <label class="form-field">
+          <span class="form-label">Category</span>
+          <select class="form-select" name="category" required>
+            <option value="Food">Food</option>
+            <option value="Drink">Drink</option>
+            <option value="Snack">Snack</option>
+          </select>
+        </label>
+
+        <label class="form-field">
+          <span class="form-label">Price (IDR)</span>
+          <input class="form-input" type="number" name="price" min="1" required />
+        </label>
+
+        <label class="form-field">
+          <span class="form-label">Emoji</span>
+          <input class="form-input" name="emoji" maxlength="4" />
+        </label>
+
+        <label class="form-field">
+          <span class="form-label">Image URL</span>
+          <input class="form-input" name="image" type="url" placeholder="https://..." />
+        </label>
+
+        <label class="form-field">
+          <span class="form-label">Upload Image</span>
+          <input class="form-input" type="file" accept="image/*" name="imageFile" />
+        </label>
+
+        <label class="form-field">
+          <span class="form-label">Stock</span>
+          <input class="form-input" name="stock" type="number" min="0" />
+        </label>
+
+        <label class="form-field admin-form-field--full">
+          <span class="form-label">Description</span>
+          <textarea class="form-textarea" name="description" rows="4"></textarea>
+        </label>
+
+        <div class="admin-form-actions" style="gap:8px;">
+          <button type="submit" class="btn btn-primary">Save Changes</button>
+          <button type="button" class="btn btn-danger" id="modal-delete-btn">Delete Item</button>
+        </div>
+      </form>
+    </div>
+  </div>
 
   <script type="module" src="js/utils/seed.js"></script>
   <script type="module" src="js/app.js"></script>

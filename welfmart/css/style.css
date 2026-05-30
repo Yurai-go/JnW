@@ -490,7 +490,8 @@ button { cursor: pointer; }
 
 .form-input,
 .form-select,
-.form-textarea {
+.form-textarea,
+.form-input[type="file"] {
   width: 100%;
   padding: 0.7em var(--space-4);
   font-size: var(--text-sm);
@@ -505,9 +506,31 @@ button { cursor: pointer; }
 
 .form-input:focus,
 .form-select:focus,
-.form-textarea:focus {
+.form-textarea:focus,
+.form-input[type="file"]:focus {
   border-color: var(--color-rust);
   box-shadow: 0 0 0 3px rgba(211,84,0,.12);
+}
+
+.form-input[type="file"]::-webkit-file-upload-button {
+  border: none;
+  padding: 0.7em 1em;
+  margin-right: 0.5em;
+  border-radius: var(--radius-sm);
+  background-color: var(--color-alabaster);
+  color: var(--color-slate);
+  font-family: var(--font-body);
+  cursor: pointer;
+}
+
+.form-input[type="file"]::-moz-file-upload-button {
+  border: none;
+  padding: 0.7em 1em;
+  border-radius: var(--radius-sm);
+  background-color: var(--color-alabaster);
+  color: var(--color-slate);
+  font-family: var(--font-body);
+  cursor: pointer;
 }
 
 .form-input::placeholder { color: var(--color-slate-muted); }

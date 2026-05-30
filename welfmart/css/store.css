@@ -168,6 +168,19 @@
   position: relative;
 }
 
+/* Image inside visual area */
+.product-card__visual img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.product-card__emoji {
+  font-size: 56px;
+  line-height: 1;
+}
+
 /* Out of stock overlay */
 .product-card.out-of-stock .product-card__visual::after {
   content: '';
@@ -207,7 +220,8 @@
   white-space: nowrap;
 }
 
-.product-card__desc {
+.product-card__desc,
+.product-card__description {
   font-size: var(--text-xs);
   color: var(--color-slate-muted);
   line-height: var(--leading-loose);
@@ -232,7 +246,8 @@
 .stock-none { color: var(--color-danger); }
 
 /* Quantity Controls injected when item is in cart */
-.product-card__qty-control {
+.product-card__qty-control,
+.product-card__quantity-controls {
   display: flex;
   align-items: center;
   gap: var(--space-3);
@@ -349,6 +364,23 @@
   color: var(--color-slate);
   line-height: 1;
 }
+
+/* Rounded, minimal Add To Cart button — pill style to match design */
+.btn-add-to-cart {
+  background: linear-gradient(180deg, var(--color-rust) 0%, var(--color-rust-deep) 100%);
+  color: #fff;
+  border: none;
+  padding: 8px 18px;
+  border-radius: 28px;
+  font-weight: var(--weight-semibold);
+  box-shadow: 0 6px 18px rgba(211,84,0,0.18);
+  cursor: pointer;
+  transition: transform var(--transition-fast), box-shadow var(--transition-fast), opacity var(--transition-fast);
+}
+
+.btn-add-to-cart:hover { transform: translateY(-2px); }
+
+.product-card__price { margin-right: 12px; }
 
 /* ── 7. Responsive Breakpoints ───────────────────────────── */
 @media (max-width: 900px) {

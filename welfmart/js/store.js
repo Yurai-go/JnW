@@ -78,14 +78,27 @@ function renderStore() {
   if (emptyStateEl) emptyStateEl.style.display = 'none';
 
   // Map products array to card templates
+  const CATEGORY_EMOJI = { food: '🍱', drink: '🧋', snack: '🍩' };
+
   gridEl.innerHTML = filteredProducts.map(product => {
     // Check if item is already in cart to show quantities if needed
     const cartItem = cart.find(item => item.id === product.id);
     const quantity = cartItem ? cartItem.qty : 0;
 
+    // Determine visual: prefer product.image, then product.emoji, then category mapping
+    const catKey = (product.category || '').toLowerCase();
+    const fallbackEmoji = product.emoji || CATEGORY_EMOJI[catKey] || '🍽️';
+
+    const visualHTML = product.image ?
+      `<div class="product-card__visual">
+          <img src="${product.image}" alt="${product.name}" onerror="this.style.display='none'; this.parentNode.querySelector('.product-card__emoji').style.display='block'" />
+          <div class="product-card__emoji" style="display:none">${fallbackEmoji}</div>
+       </div>`
+      : `<div class="product-card__visual"><div class="product-card__emoji">${fallbackEmoji}</div></div>`;
+
     return `
       <div class="product-card" data-id="${product.id}">
-        <div class="product-card__image-placeholder">${product.emoji || '🍽️'}</div>
+        ${visualHTML}
         <div class="product-card__content">
           <span class="product-card__category">${product.category}</span>
           <h4 class="product-card__title">${product.name}</h4>
@@ -101,8 +114,8 @@ function renderStore() {
                 <button class="btn-qty-plus" data-id="${product.id}">+</button>
               </div>
             ` : `
-              <button class="btn-add-to-cart btn-primary" data-id="${product.id}">
-                Add to Cart
+              <button class="btn-add-to-cart" data-id="${product.id}">
+                Add To Cart
               </button>
             `}
           </div>

@@ -68,6 +68,20 @@ function persistCartFromProducts(productIdsToKeep) {
   }
 }
 
+function readFileAsDataURL(file) {
+  return new Promise((resolve, reject) => {
+    if (!file) {
+      resolve(null);
+      return;
+    }
+
+    const reader = new FileReader();
+    reader.onload = () => resolve(reader.result);
+    reader.onerror = reject;
+    reader.readAsDataURL(file);
+  });
+}
+
 /* ── 1. Live Orders Management ───────────────────────────── */
 const STATUS_FLOW = {
   'Pending': 'Preparing',
@@ -136,7 +150,7 @@ function initInventoryForm() {
   const form = document.getElementById('inventory-form');
   if (!form) return;
 
-  form.addEventListener('submit', (e) => {
+  form.addEventListener('submit', async (e) => {
     e.preventDefault();
 
     const formData = new FormData(form);
@@ -144,6 +158,9 @@ function initInventoryForm() {
     const category = formData.get('category').toString();
     const price = Number(formData.get('price'));
     const emoji = formData.get('emoji').toString().trim() || '🍽️';
+    const imageUrl = formData.get('image') ? formData.get('image').toString().trim() : '';
+    const imageFile = formData.get('imageFile');
+    const imageFileUrl = imageFile && imageFile.size ? await readFileAsDataURL(imageFile) : null;
     const stock = Number(formData.get('stock'));
     const description = formData.get('description').toString().trim();
 
@@ -153,6 +170,7 @@ function initInventoryForm() {
     }
 
     const allProducts = storageGet('products', []);
+    const image = imageFileUrl || imageUrl || undefined;
 
     allProducts.push({
       id: `prod_${Date.now()}_${Math.random().toString(36).slice(2, 8)}`,
@@ -160,6 +178,7 @@ function initInventoryForm() {
       category,
       price: Math.round(price),
       emoji,
+      image,
       description,
       stock: Math.round(stock),
       available: stock > 0,
@@ -194,7 +213,7 @@ function renderInventory() {
       <tr>
         <td>
           <div class="td-item-name">
-            <span>${p.emoji}</span>
+            ${p.image ? `<img src="${p.image}" alt="${p.name}" class="td-thumb" onerror="this.style.display='none'"/>` : `<span>${p.emoji}</span>`}
             <span>${p.name}</span>
           </div>
         </td>
@@ -203,11 +222,9 @@ function renderInventory() {
         <td>${stockBadge}</td>
         <td>
           <div class="admin-action-group">
+            <button class="btn btn-primary btn-sm js-open-edit" data-id="${p.id}">Edit</button>
             <button class="btn btn-secondary btn-sm js-toggle-stock" data-id="${p.id}" style="color: var(--color-slate); border-color: var(--color-slate-faint);">
               ${toggleAction}
-            </button>
-            <button class="btn btn-ghost btn-sm js-update-price" data-id="${p.id}" data-price="${p.price}">
-              Edit Price
             </button>
             <button class="btn btn-ghost btn-sm js-delete-item" data-id="${p.id}" data-name="${p.name}" style="color: var(--color-danger); border-color: rgba(192,57,43,.3);">
               Delete
@@ -283,6 +300,14 @@ function renderInventory() {
       renderInventory();
     });
   });
+
+  // Open Edit modal handler
+  document.querySelectorAll('.js-open-edit').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      const productId = e.target.closest('.js-open-edit').dataset.id;
+      openEditModal(productId);
+    });
+  });
 }
 
 /* ── 3. User Roles & Security ────────────────────────────── */
@@ -328,3 +353,91 @@ function renderUsers() {
     });
   });
 }
+
+/* ── Edit Modal Logic ───────────────────────────────────── */
+const modalEl = document.getElementById('edit-item-modal');
+const modalForm = document.getElementById('edit-item-form');
+const modalDeleteBtn = document.getElementById('modal-delete-btn');
+
+function openEditModal(productId) {
+  const allProducts = storageGet('products', []);
+  const product = allProducts.find(p => p.id === productId);
+  if (!product) return;
+
+  // populate form
+  modalForm.elements['id'].value = product.id;
+  modalForm.elements['name'].value = product.name || '';
+  modalForm.elements['category'].value = product.category || 'Food';
+  modalForm.elements['price'].value = product.price || 0;
+  modalForm.elements['emoji'].value = product.emoji || '';
+  modalForm.elements['image'].value = product.image || '';
+  modalForm.elements['stock'].value = product.stock != null ? product.stock : 0;
+  modalForm.elements['description'].value = product.description || '';
+
+  modalEl.setAttribute('aria-hidden', 'false');
+  modalEl.classList.add('visible');
+}
+
+function closeModal() {
+  modalEl.setAttribute('aria-hidden', 'true');
+  modalEl.classList.remove('visible');
+}
+
+// backdrop & close buttons
+modalEl?.addEventListener('click', (e) => {
+  const action = e.target.closest('[data-action]')?.dataset.action;
+  if (action === 'close') closeModal();
+});
+
+// Save changes
+modalForm?.addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const fd = new FormData(modalForm);
+  const id = fd.get('id');
+  const allProducts = storageGet('products', []);
+  const idx = allProducts.findIndex(p => p.id === id);
+  if (idx === -1) return;
+
+  const name = fd.get('name').toString().trim();
+  const category = fd.get('category').toString();
+  const price = Number(fd.get('price')) || 0;
+  const emoji = fd.get('emoji').toString().trim() || undefined;
+  const imageUrl = fd.get('image').toString().trim() || '';
+  const imageFile = fd.get('imageFile');
+  const imageFileUrl = imageFile && imageFile.size ? await readFileAsDataURL(imageFile) : null;
+  const image = imageFileUrl || imageUrl || undefined;
+  const stock = Number(fd.get('stock')) || 0;
+  const description = fd.get('description').toString().trim() || '';
+
+  if (!name) { showToast('Name cannot be empty.', 'danger'); return; }
+
+  allProducts[idx] = {
+    ...allProducts[idx],
+    name,
+    category,
+    price: Math.round(price),
+    emoji,
+    image,
+    stock: Math.round(stock),
+    available: stock > 0,
+    description,
+  };
+
+  storageSet('products', allProducts);
+  showToast('Item updated.', 'success');
+  closeModal();
+  renderInventory();
+});
+
+// Delete from modal
+modalDeleteBtn?.addEventListener('click', () => {
+  const id = modalForm.elements['id'].value;
+  if (!confirm('Delete this item? This action cannot be undone.')) return;
+  const allProducts = storageGet('products', []);
+  const filtered = allProducts.filter(p => p.id !== id);
+  storageSet('products', filtered);
+  persistCartFromProducts(new Set(filtered.map(p => p.id)));
+  showToast('Item deleted.', 'warning');
+  closeModal();
+  renderInventory();
+});
